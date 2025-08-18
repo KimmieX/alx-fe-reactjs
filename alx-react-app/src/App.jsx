@@ -1,7 +1,8 @@
-import WelcomeMessage from './components/WelcomeMessage
-import Header from './Header'
-import MainContent from './MainContent'
-import Footer from './Footer'
+import UserProfile from './components/UserProfile';
+import WelcomeMessage from './components/WelcomeMessage';
+import Header from './Header';
+import MainContent from './MainContent';
+import Footer from './Footer';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -23,6 +24,16 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+
+       <div style={{ padding: '2rem' }}>
+      <h1>User Profile</h1>
+      <UserProfile 
+        name="Alice" 
+        age="25" 
+        bio="Loves hiking and photography" 
+      />
+    </div>
+    
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
