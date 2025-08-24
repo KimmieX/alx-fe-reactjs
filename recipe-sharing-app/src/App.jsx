@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import RecipeDetails from './RecipeDetails';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
 import reactLogo from './assets/react.svg'
@@ -7,6 +9,17 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+
+
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<RecipeList />} />
+      <Route path="/recipe/:id" element={<RecipeDetails />} />
+    </Routes>
+  </Router>
+);
+
 
   return (
     <>
