@@ -33,11 +33,7 @@ function App() {
 
         <div style={{ padding: '2rem' }}>
           <h1>User Profile</h1>
-          <UserProfile
-            name="Alice"
-            age="25"
-            bio="Loves hiking and photography"
-          />
+          <UserProfile />
         </div>
 
         <h1>Vite + React</h1>
