@@ -24,3 +24,4 @@ const FavoritesList = () => {
     </section>
   );
 };
+export default FavoritesList;
