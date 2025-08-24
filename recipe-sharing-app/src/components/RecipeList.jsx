@@ -1,15 +1,16 @@
 import { useRecipeStore } from '../store/recipeStore';
+import React from 'react';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
 
   return (
     <div>
-      <h2>Recipe List</h2>
-      {recipes.map((recipe) => (
+      {filteredRecipes.map((recipe) => (
         <div key={recipe.id}>
           <h3>{recipe.title}</h3>
-          <p>{recipe.description}</p>
+          <p>Prep Time: {recipe.prepTime} mins</p>
+          <p>Ingredients: {recipe.ingredients.join(', ')}</p>
         </div>
       ))}
     </div>
