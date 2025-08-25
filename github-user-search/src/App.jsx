@@ -3,18 +3,18 @@ import Search from './components/Search';
 import { fetchUserData } from './services/githubService';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSearch = async (username) => {
+  const handleSearch = async (params) => {
     setLoading(true);
     setError(false);
-    setUser(null);
+    setUsers([]);
 
     try {
-      const data = await fetchUserData(username);
-      setUser(data);
+      const results = await fetchUserData(params);
+      setUsers(results);
     } catch (err) {
       setError(true);
     } finally {
@@ -23,21 +23,14 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>GitHub User Search</h1>
-      <Search onSearch={handleSearch} />
-
-      {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can't find the user.</p>}
-      {user && (
-        <div>
-          <img src={user.avatar_url} alt={user.login} width={100} />
-          <h2>{user.name || user.login}</h2>
-          <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-            View GitHub Profile
-          </a>
-        </div>
-      )}
+    <div className="p-6">
+      <h1 className="text-2xl font-bold text-center mb-4">GitHub User Search</h1>
+      <Search
+        onSearch={handleSearch}
+        users={users}
+        loading={loading}
+        error={error}
+      />
     </div>
   );
 }
