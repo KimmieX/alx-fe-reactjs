@@ -1,63 +1,67 @@
 import { useState } from 'react';
 
 export default function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    for (const [key, value] of Object.entries(formData)) {
-      if (!value.trim()) {
-        newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
-      }
-    }
-    return newErrors;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    const newErrors = {};
+    if (!username.trim()) newErrors.username = 'Username is required';
+    if (!email.trim()) newErrors.email = 'Email is required';
+    if (!password.trim()) newErrors.password = 'Password is required';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     } else {
-      console.log('Submitting:', formData);
-      // Simulate API call or trigger next step
+      console.log('Submitting:', { username, email, password });
+      // Simulate API call or next step
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-md rounded space-y-4">
-      {['username', 'email', 'password'].map((field) => (
-        <div key={field}>
-          <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
-            {field}
-          </label>
-          <input
-            id={field}
-            type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
-            name={field}
-            value={formData[field]}
-            onChange={handleChange}
-            className={`mt-1 block w-full p-2 border rounded ${
-              errors[field] ? 'border-red-500' : 'border-gray-300'
-            }`}
-          />
-          {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
-        </div>
-      ))}
+      <div>
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className={`mt-1 block w-full p-2 border rounded ${errors.username ? 'border-red-500' : 'border-gray-300'}`}
+        />
+        {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`mt-1 block w-full p-2 border rounded ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+        />
+        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={`mt-1 block w-full p-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+        />
+        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+      </div>
+
       <button
         type="submit"
         className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
