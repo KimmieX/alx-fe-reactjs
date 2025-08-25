@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import recipesData from '../data.json';
 
 const HomePage = () => {
@@ -9,6 +10,7 @@ const HomePage = () => {
   }, []);
 
   return (
+    
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">🍽️ Recipe Sharing Platform</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -31,6 +33,18 @@ const HomePage = () => {
               >
                 View Recipe →
               </a>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {recipes.map((recipe) => (
+                    <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
+                      <div className="recipe-card p-4 bg-white shadow-md rounded">
+                        <h2 className="text-xl font-bold">{recipe.title}</h2>
+                        <p>{recipe.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+
             </div>
           </div>
         ))}
