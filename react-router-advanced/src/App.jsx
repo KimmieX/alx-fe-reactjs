@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import BlogPost from './components/BlogPost';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Login from './pages/Login';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -28,7 +29,8 @@ function App() {
                  <Route path="/profile/*" element={<Profile />} />
                  <Route path="/blog/:postId" element={<BlogPost />} />
                   <Route path="/profile/*" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
-
+                  <Route path="/login" element={<Login />} />
+                   <Route path="/blog/:id" element={<BlogPost />} />
             </Routes>
            </Router>
   );
