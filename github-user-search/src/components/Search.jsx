@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 
-// src/components/Search.jsx
+
 import React, { useState } from 'react';
 
 function Search() {
