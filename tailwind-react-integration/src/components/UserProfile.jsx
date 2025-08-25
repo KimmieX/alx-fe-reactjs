@@ -7,7 +7,7 @@ function UserProfile() {
         className="rounded-full w-24 h-24 md:w-36 md:h-36 mx-auto object-cover"
       />
       <h1 className="text-lg md:text-xl text-blue-800 my-4 text-center font-semibold">
-        Hatsu Kimberly
+        John Doe
       </h1>
       <p className="text-sm md:text-base text-gray-600 text-center">
         Developer at Example Co. Loves to write code and explore new technologies.
