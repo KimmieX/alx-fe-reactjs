@@ -34,7 +34,11 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+  "testEnvironment": "jsdom"
+},
   "devDependencies": {
+    "@babel/core": "^7.28.3",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "@testing-library/jest-dom": "^6.8.0",
