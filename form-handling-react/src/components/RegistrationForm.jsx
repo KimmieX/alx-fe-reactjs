@@ -10,77 +10,46 @@ export default function RegistrationForm() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.username.trim()) newErrors.username = 'Username is required';
-    if (!formData.email.trim()) newErrors.email = 'Email is required';
-    if (!formData.password.trim()) newErrors.password = 'Password is required';
+    Object.entries(formData).forEach(([key, value]) => {
+      if (!value.trim()) newErrors[key] = `${key} is required`;
+    });
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-      return;
-    }
-
-    try {
-      const response = await fetch('https://mockapi.io/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const result = await response.json();
-      console.log('User registered:', result);
-      setFormData({ username: '', email: '', password: '' });
-      setErrors({});
-    } catch (error) {
-      console.error('Registration failed:', error);
+    } else {
+      console.log('Submitting:', formData);
+      // Simulate API call here
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        {errors.username && <span style={{ color: 'red' }}>{errors.username}</span>}
-      </div>
-
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
-      </div>
-
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
-      </div>
-
-      <button type="submit">Register</button>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {['username', 'email', 'password'].map((field) => (
+        <div key={field}>
+          <label className="block">{field}</label>
+          <input
+            type={field === 'password' ? 'password' : 'text'}
+            name={field}
+            value={formData[field]}
+            onChange={handleChange}
+            className="border p-2 w-full"
+          />
+          {errors[field] && <p className="text-red-500">{errors[field]}</p>}
+        </div>
+      ))}
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+        Register
+      </button>
     </form>
   );
 }
