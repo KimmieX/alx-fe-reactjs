@@ -1,4 +1,3 @@
-// src/PostsComponent.jsx
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
