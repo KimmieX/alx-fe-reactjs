@@ -7,14 +7,7 @@ const initialTodos = [
 ];
 
 export default function TodoList() {
-  const [todos, setTodos] = useState([
-  { id: 1, text: 'Learn React' },
-]);
-
-const handleDelete = (id) => {
-  setTodos(prev => prev.filter(todo => todo.id !== id));
-};
-
+  const [todos, setTodos] = useState(initialTodos);
 
   const addTodo = (text) => {
     const newTodo = { id: Date.now(), text, completed: false };
@@ -22,12 +15,8 @@ const handleDelete = (id) => {
   };
 
   const toggleTodo = (id) => {
-    setTodos(todos.map(todo => (<li key={todo.id} data-testid={`todo-${todo.id}`}>
-    {todo.text}
-    <button onClick={() => handleDelete(todo.id)}>Delete</button>
-  </li>
-)
-      //todo.id === id ? { ...todos, completed: !todos.completed } : todos
+    setTodos(todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
@@ -48,7 +37,10 @@ const handleDelete = (id) => {
             data-testid={`todo-${todo.id}`}
           >
             {todo.text}
-            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
+            <button onClick={(e) => {
+              e.stopPropagation();
+              deleteTodo(todo.id);
+            }}>
               Delete
             </button>
           </li>
