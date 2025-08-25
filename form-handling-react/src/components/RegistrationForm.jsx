@@ -10,14 +10,20 @@ export default function RegistrationForm() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const validate = () => {
     const newErrors = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      if (!value.trim()) newErrors[key] = `${key} is required`;
-    });
+    for (const [key, value] of Object.entries(formData)) {
+      if (!value.trim()) {
+        newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
+      }
+    }
     return newErrors;
   };
 
@@ -28,26 +34,34 @@ export default function RegistrationForm() {
       setErrors(validationErrors);
     } else {
       console.log('Submitting:', formData);
-      // Simulate API call here
+      // Simulate API call or trigger next step
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white shadow-md rounded space-y-4">
       {['username', 'email', 'password'].map((field) => (
         <div key={field}>
-          <label className="block">{field}</label>
+          <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
+            {field}
+          </label>
           <input
-            type={field === 'password' ? 'password' : 'text'}
+            id={field}
+            type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
             name={field}
             value={formData[field]}
             onChange={handleChange}
-            className="border p-2 w-full"
+            className={`mt-1 block w-full p-2 border rounded ${
+              errors[field] ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {errors[field] && <p className="text-red-500">{errors[field]}</p>}
+          {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
         </div>
       ))}
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2">
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+      >
         Register
       </button>
     </form>
